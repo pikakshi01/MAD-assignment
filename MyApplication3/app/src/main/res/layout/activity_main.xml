@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F0F0F0"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Length Unit Converter"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#2E7D32"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        />
+
+    <EditText
+        android:id="@+id/inputValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your value"
+        android:inputType="numberDecimal"
+        android:background="@drawable/edit_text_bg"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <Spinner
+        android:id="@+id/fromUnitSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp" />
+
+    <Spinner
+        android:id="@+id/toUnitSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp" />
+
+    <Button
+        android:id="@+id/convertButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Convert"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result: "
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp" />
+</LinearLayout>
+
