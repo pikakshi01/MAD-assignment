@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "125243890637",
+    "project_id": "madques4new",
+    "storage_bucket": "madques4new.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125243890637:android:6e22331317439b539f0284",
+        "android_client_info": {
+          "package_name": "com.example.mad_ques4_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125243890637-ifj2ohsvd146k5kbdigf1nsd52gqg21k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn6QsFfB7CETxdOI1H3wAjGIrQsYxodTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125243890637-ifj2ohsvd146k5kbdigf1nsd52gqg21k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

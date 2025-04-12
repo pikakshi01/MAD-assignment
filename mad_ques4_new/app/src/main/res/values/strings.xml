@@ -1,0 +1,12 @@
+<resources>
+    <!-- App-related strings -->
+    <string name="app_name">Mad Ques 4 New</string>
+
+    <!-- Firebase Web Client ID (replace this with your actual Web Client ID) -->
+    <string name="default_web_client_id">125243890637-ifj2ohsvd146k5kbdigf1nsd52gqg21k.apps.googleusercontent.com</string>
+
+    <!-- Google Sign-In related strings -->
+    <string name="google_sign_in_button_text">Sign in with Google</string>
+    <string name="google_sign_in_failed">Sign-in failed, please try again.</string>
+    <string name="google_sign_in_success">Sign-in successful, welcome!</string>
+</resources>
