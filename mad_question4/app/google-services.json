@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "290328380730",
+    "project_id": "ques4mad",
+    "storage_bucket": "ques4mad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290328380730:android:f079acbfcc7b44cfbb3c03",
+        "android_client_info": {
+          "package_name": "com.example.ques4_mad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_ola6-YOcNJsqG8C6DoIzg4DEdc7UwLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
