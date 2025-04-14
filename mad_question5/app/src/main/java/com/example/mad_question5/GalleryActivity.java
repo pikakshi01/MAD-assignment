@@ -1,6 +1,18 @@
 package com.example.mad_question5;
 
-public class GalleryActivity extends AppCompatActivity {
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
+import java.util.ArrayList;
+
+public class GalleryActivity extends AppCompatActivity implements GalleryAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private ArrayList<File> imageFiles = new ArrayList<>();
@@ -21,14 +33,24 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void loadImagesFromUri(Uri uri) {
         DocumentFile dir = DocumentFile.fromTreeUri(this, uri);
+        imageFiles.clear();
+
         if (dir != null && dir.isDirectory()) {
             for (DocumentFile file : dir.listFiles()) {
-                if (file.getType() != null && file.getType().startsWith("image/")) {
+                if (file.isFile() && file.getType() != null && file.getType().startsWith("image/")) {
                     imageFiles.add(new File(file.getUri().getPath()));
                 }
             }
         }
-        adapter = new GalleryAdapter(this, imageFiles);
+
+        adapter = new GalleryAdapter(imageFiles, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(File imageFile) {
+        Intent intent = new Intent(this, ImageDetailActivity.class);
+        intent.putExtra("imagePath", imageFile.getAbsolutePath());
+        startActivity(intent);
     }
 }

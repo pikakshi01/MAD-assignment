@@ -1,28 +1,43 @@
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
+package com.example.mad_question5;
 
-    private Context context;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
+import java.util.ArrayList;
+
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ImageViewHolder> {
+
     private ArrayList<File> imageFiles;
+    private OnItemClickListener onItemClickListener;
 
-    public GalleryAdapter(Context context, ArrayList<File> imageFiles) {
-        this.context = context;
+    public interface OnItemClickListener {
+        void onItemClick(File imageFile);
+    }
+
+    public GalleryAdapter(ArrayList<File> imageFiles, OnItemClickListener onItemClickListener) {
         this.imageFiles = imageFiles;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.image_item, parent, false);
-        return new ViewHolder(view);
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        File file = imageFiles.get(position);
-        Glide.with(context).load(file).into(holder.imageView);
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
+        return new ImageViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ImageViewHolder holder, int position) {
+        File imageFile = imageFiles.get(position);
+        holder.imageView.setImageURI(Uri.fromFile(imageFile));
+
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ImageDetailActivity.class);
-            intent.putExtra("imagePath", file.getAbsolutePath());
-            context.startActivity(intent);
+            onItemClickListener.onItemClick(imageFile);
         });
     }
 
@@ -31,11 +46,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return imageFiles.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        public ViewHolder(View view) {
-            super(view);
-            imageView = view.findViewById(R.id.imageView);
+
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

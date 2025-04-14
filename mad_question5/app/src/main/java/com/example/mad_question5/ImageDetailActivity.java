@@ -1,3 +1,18 @@
+package com.example.mad_question5;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+import java.util.Date;
+
 public class ImageDetailActivity extends AppCompatActivity {
 
     private ImageView imageView;
@@ -24,7 +39,7 @@ public class ImageDetailActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", (dialog, which) -> {
                         if (imageFile.delete()) {
                             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-                            finish();
+                            finish(); // Close the activity after deletion
                         } else {
                             Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
                         }
