@@ -9,18 +9,18 @@
     <Button
         android:id="@+id/takePhotoBtn"
         android:text="Take a pic :)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:background="@drawable/button_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:id="@+id/selectFolderBtn"
         android:text="View images (Select Folder)"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:background="@drawable/button_background"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:background="@drawable/button_background" />
 
 </LinearLayout>
