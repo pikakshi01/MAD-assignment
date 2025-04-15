@@ -1,52 +1,44 @@
 package com.example.mad_question5;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.io.File;
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
+import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ImageViewHolder> {
 
-    private ArrayList<File> imageFiles;
-    private OnItemClickListener onItemClickListener;
+    private List<Uri> imageUris;
+    private Context context;
 
-    public interface OnItemClickListener {
-        void onItemClick(File imageFile);
-    }
-
-    public GalleryAdapter(ArrayList<File> imageFiles, OnItemClickListener onItemClickListener) {
-        this.imageFiles = imageFiles;
-        this.onItemClickListener = onItemClickListener;
+    public GalleryAdapter(List<Uri> imageUris, Context context) {
+        this.imageUris = imageUris;
+        this.context = context;
     }
 
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
-        return new ImageViewHolder(view);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
+        return new ImageViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        File imageFile = imageFiles.get(position);
-        holder.imageView.setImageURI(Uri.fromFile(imageFile));
-
-        holder.itemView.setOnClickListener(v -> {
-            onItemClickListener.onItemClick(imageFile);
-        });
+        Uri uri = imageUris.get(position);
+        Picasso.get().load(uri).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return imageFiles.size();
+        return imageUris.size();
     }
 
-    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
+
         ImageView imageView;
 
         public ImageViewHolder(View itemView) {

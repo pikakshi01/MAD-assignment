@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
    <!--  <color name="red">#FF0000</color> -->
     <!-- <color name="pink">#FFC0CB</color> -->
-    <color name="yellow">#FFFF00</color> <!-- Bright yellow -->
+    <color name="yellow">#FFFF00</color>
+    <!-- Bright yellow -->
 </resources>

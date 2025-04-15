@@ -1,58 +1,68 @@
 package com.example.mad_question5;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.app.AlertDialog;
+import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.File;
-import java.util.Date;
 
 public class ImageDetailActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    private TextView detailsText;
-    private String imagePath;
+    private TextView detailText;
+    private Button deleteButton;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
-        imageView = findViewById(R.id.imageView);
-        detailsText = findViewById(R.id.detailsText);
-        imagePath = getIntent().getStringExtra("imagePath");
+        imageView = findViewById(R.id.detailImageView);
+        detailText = findViewById(R.id.detailText);
+        deleteButton = findViewById(R.id.deleteButton);
 
-        File imageFile = new File(imagePath);
-        imageView.setImageURI(Uri.fromFile(imageFile));
-        detailsText.setText(getImageDetails(imageFile));
+        // Retrieve image URI passed from previous activity
+        String uriStr = getIntent().getStringExtra("imageUri");
+        if (uriStr != null) {
+            imageUri = Uri.parse(uriStr);
+            imageView.setImageURI(imageUri);
+            showImageDetails(imageUri);
+        }
 
-        findViewById(R.id.deleteButton).setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Delete?")
-                    .setMessage("Do you really want to delete this image?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        if (imageFile.delete()) {
-                            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-                            finish(); // Close the activity after deletion
-                        } else {
-                            Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        });
+        deleteButton.setOnClickListener(v -> showDeleteConfirmation());
     }
 
-    private String getImageDetails(File file) {
-        return "Name: " + file.getName() +
-                "\nPath: " + file.getAbsolutePath() +
-                "\nSize: " + (file.length() / 1024) + " KB" +
-                "\nDate: " + new Date(file.lastModified()).toString();
+    // Show image details
+    private void showImageDetails(Uri uri) {
+        String path = uri.getPath();
+        File imageFile = new File(path);
+        String info = "Name: " + imageFile.getName() + "\nSize: " + imageFile.length() + " bytes\nPath: " + path;
+        detailText.setText(info);
+    }
+
+    // Show delete confirmation dialog
+    private void showDeleteConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Image")
+                .setMessage("Are you sure you want to delete this image?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    File imageFile = new File(imageUri.getPath());
+                    if (imageFile.delete()) {
+                        finish();
+                    } else {
+                        new AlertDialog.Builder(this)
+                                .setMessage("Failed to delete image")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mad_question5">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Permissions for Camera, Storage, and Media -->
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -14,9 +15,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mad_question5">
+        android:theme="@style/Theme.Mad_question5"
+        android:requestLegacyExternalStorage="true"> <!-- For Android 10+ compatibility -->
 
-        <!-- Main Activity: The entry point of your app -->
+        <!-- MainActivity as the entry point -->
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,13 +27,25 @@
             </intent-filter>
         </activity>
 
-        <!-- Gallery Activity -->
+        <!-- GalleryActivity to show images in a grid -->
         <activity android:name=".GalleryActivity"
             android:exported="true" />
 
-        <!-- Image Detail Activity -->
+        <!-- ImageDetailActivity to show image details and delete options -->
         <activity android:name=".ImageDetailActivity"
             android:exported="true" />
+
+        <!-- FileProvider setup to access external files -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.mad_question5.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
 
     </application>
 

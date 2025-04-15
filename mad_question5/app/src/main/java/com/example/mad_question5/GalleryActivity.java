@@ -3,54 +3,66 @@ package com.example.mad_question5;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.documentfile.provider.DocumentFile;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class GalleryActivity extends AppCompatActivity implements GalleryAdapter.OnItemClickListener {
+public class GalleryActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ArrayList<File> imageFiles = new ArrayList<>();
-    private GalleryAdapter adapter;
+    private GridView gridView;
+    private ArrayList<Uri> imageUris;
+    private GalleryAdapter galleryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        gridView = findViewById(R.id.gridView);
+        imageUris = new ArrayList<>();
 
-        String folderUriStr = getIntent().getStringExtra("folderUri");
-        Uri folderUri = Uri.parse(folderUriStr);
-        loadImagesFromUri(folderUri);
+        // Load images from external storage
+        loadImagesFromFolder();
+
+        galleryAdapter = new GalleryAdapter(imageUris, this);
+        gridView.setAdapter(galleryAdapter);
+
+        gridView.setOnItemClickListener((parent, view, position, id) -> {
+            Uri imageUri = imageUris.get(position);
+            Intent intent = new Intent(this, ImageDetailActivity.class);
+            intent.putExtra("imageUri", imageUri.toString());
+            startActivity(intent);
+        });
     }
 
-    private void loadImagesFromUri(Uri uri) {
-        DocumentFile dir = DocumentFile.fromTreeUri(this, uri);
-        imageFiles.clear();
-
-        if (dir != null && dir.isDirectory()) {
-            for (DocumentFile file : dir.listFiles()) {
-                if (file.isFile() && file.getType() != null && file.getType().startsWith("image/")) {
-                    imageFiles.add(new File(file.getUri().getPath()));
+    private void loadImagesFromFolder() {
+        File storageDir = getExternalFilesDir("Pictures"); // Pictures folder
+        if (storageDir != null) {
+            File[] files = storageDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && isImageFile(file)) {
+                        imageUris.add(Uri.fromFile(file));
+                    }
                 }
             }
         }
-
-        adapter = new GalleryAdapter(imageFiles, this);
-        recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void onItemClick(File imageFile) {
-        Intent intent = new Intent(this, ImageDetailActivity.class);
-        intent.putExtra("imagePath", imageFile.getAbsolutePath());
-        startActivity(intent);
+    private boolean isImageFile(File file) {
+        String[] imageExtensions = {"jpg", "jpeg", "png", "gif"};
+        String fileName = file.getName().toLowerCase();
+        for (String ext : imageExtensions) {
+            if (fileName.endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
